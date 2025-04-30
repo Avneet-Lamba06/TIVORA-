@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="menCSS.css">
+  <title>Document</title>
+</head>
+<body>
+  <div class="top-nav">
+    <a href="#">NEW TODAY</a>
+    <a href="#">CLOTHING</a>
+    <a href="#">DRESSES</a>
+    <a href="#">SHOES</a>
+    <a href="#">ACCESSORIES</a>
+    <a href="#">DESIGNERS</a>
+    <a href="#">FESTIVAL</a>
+    <a href="#">SALE</a>
+  </div>
+
+  <header>
+    <h1>Accessories</h1>
+    <nav>
+      <a href="#">New</a>
+      <a href="#">Clothing</a>
+      <a href="#">Shoes</a>
+      <a href="#">Accessories</a>
+      <div class="cart-icon" onclick="openCartModal()">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-count">0</span>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Slideshow Container -->
+  <div class="slideshow-container">
+    <div class="slide active">
+      <img src="https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?cs=srgb&dl=pexels-solliefoto-298863.jpg&fm=jpg" alt="Hair Accessories">
+    
+    </div>
+       
+    
+    <div class="slide">
+      <img src="https://tbo.clothing/cdn/shop/articles/Men_s_Style_Through_The_Ages.jpg?v=1708696847&width=1100" alt="Summer Hats">
+      
+    </div>
+        
+        
+    
+    <div class="slide">
+      <img src="https://www.swisswatchexpo.com/thewatchclub/wp-content/uploads/2023/05/Rolex-GMT-Master-II-Black-Blue-Batman-Bezel-Steel-Mens-Watch-126710-.jpg" alt="Jewelry Collection">
+      
+    </div>
+    
+    <div class="slide">
+      <img src="https://frenchcrown.in/cdn/shop/articles/black_jeans_outfit_ideas.png?v=1728455644&width=2048" alt="Belts Collection">
+      
+    </div>
+    
+    <div class="slide">
+      <img src="https://images.unsplash.com/photo-1664286074176-5206ee5dc878?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YmVsdHN8ZW58MHx8MHx8fDA%3D" alt="Seasonal Sale">
+     
+    </div>
+    
+    <!-- Next and previous buttons -->
+    <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+    <a class="next" onclick="changeSlide(1)">&#10095;</a>
+    
+    <!-- The dots/circles -->
+    <div class="dots-container">
+      <span class="dot active-dot" onclick="currentSlide(0)"></span>
+      <span class="dot" onclick="currentSlide(1)"></span>
+      <span class="dot" onclick="currentSlide(2)"></span>
+      <span class="dot" onclick="currentSlide(3)"></span>
+      <span class="dot" onclick="currentSlide(4)"></span>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="sidebar">
+      <h3>Categories</h3>
+      <ul>
+        <li onclick="displayProducts(products)">Show All</li>
+        <li onclick="filterItems('tshirts')">SHIRTS</li>
+        <li onclick="filterItems('tanks')">TANKS</li>
+
+        <li onclick="filterItems('shirts')">T-SHIRTS</li>
+        <li onclick="filterItems('jeans')">JEANS</li>
+        <li onclick="filterItems('sneakers')">SNEAKERS</li>
+        <li onclick="filterItems('sunglasses')">SUNGLASSES</li>
+        <li onclick="filterItems('watches')">WATCHES</li>
+
+      </ul>
+    </div>
+    <div class="products" id="products"></div>
+  </div>
+  
+  <!-- Product Detail Modal -->
+  <div id="product-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeProductModal()">&times;</span>
+      <div id="product-detail" class="product-detail">
+        <!-- Product details will be loaded here -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Cart Modal -->
+  <div id="cart-modal" class="modal cart-modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeCartModal()">&times;</span>
+      <h2>Your Shopping Cart</h2>
+      <div id="cart-content">
+        <!-- Cart items will be loaded here -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Checkout Modal -->
+  <div id="checkout-modal" class="modal checkout-modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeCheckoutModal()">&times;</span>
+      <h2>Checkout</h2>
+      <div class="checkout-container">
+        <div class="checkout-form">
+          <div class="form-section">
+            <h3>Contact Information</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" required>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-section">
+            <h3>Shipping Address</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="first-name">First Name</label>
+                <input type="text" id="first-name" required>
+              </div>
+              <div class="form-group">
+                <label for="last-name">Last Name</label>
+                <input type="text" id="last-name" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="address">Address</label>
+              <input type="text" id="address" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" required>
+              </div>
+              <div class="form-group">
+                <label for="state">State</label>
+                <input type="text" id="state" required>
+              </div>
+              <div class="form-group">
+                <label for="zip">Postal Code</label>
+                <input type="text" id="zip" required>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-section">
+            <h3>Payment Method</h3>
+            <div class="payment-methods">
+              <label class="payment-method active">
+                <input type="radio" name="payment" value="credit-card" checked>
+                <span>Credit Card</span>
+              </label>
+              <label class="payment-method">
+                <input type="radio" name="payment" value="paypal">
+                <span>PayPal</span>
+              </label>
+              <label class="payment-method">
+                <input type="radio" name="payment" value="upi">
+                <span>UPI</span>
+              </label>
+            </div>
+            
+            <div id="credit-card-form" class="payment-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="card-number">Card Number</label>
+                  <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="card-name">Name on Card</label>
+                  <input type="text" id="card-name" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="expiry">Expiry Date</label>
+                  <input type="text" id="expiry" placeholder="MM/YY" required>
+                </div>
+                <div class="form-group">
+                  <label for="cvv">CVV</label>
+                  <input type="text" id="cvv" required>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <button class="place-order-btn" onclick="placeOrder()">Place Order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="menJS.js"></script>
+</body>
+</html>
