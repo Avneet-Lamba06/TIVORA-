@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Luxury Perfume Shop</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body
+
+     {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+    }
+    .top-nav {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      background-color: white;
+      border-bottom: 1px solid #ddd;
+      padding: 15px 0;
+    }
+    .top-nav a {
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    header {
+      background-color: #f9f9f9;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+    }
+    header h1 {
+      font-size: 24px;
+    }
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+    }
+    .container {
+      display: flex;
+      margin: 20px;
+    }
+    .sidebar {
+      width: 200px;
+      padding-right: 20px;
+      border-right: 1px solid #ccc;
+    }
+    .sidebar h3 {
+      margin-bottom: 10px;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar li {
+      margin: 8px 0;
+      cursor: pointer;
+      color: #333;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      padding: 0 20px;
+      flex: 1;
+    }
+    .product {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .product:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .img-container {
+      position: relative;
+      width: 100%;
+      padding-top: 100%;
+      overflow: hidden;
+    }
+    .product img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+      transition: opacity 0.3s ease;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .product .default-img {
+      opacity: 1;
+      z-index: 1;
+    }
+    .product .hover-img {
+      opacity: 0;
+      z-index: 2;
+    }
+    .product:hover .default-img {
+      opacity: 0;
+    }
+    .product:hover .hover-img {
+      opacity: 1;
+    }
+    .product h4 {
+      margin: 10px 0 5px;
+    }
+    .product p {
+      color: #777;
+      margin-bottom: 10px;
+    }
+    .product-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .buy-now-btn, .details-btn {
+      flex: 1;
+      padding: 8px 0;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+    }
+    .buy-now-btn {
+      background-color: #333;
+      color: white;
+    }
+    .buy-now-btn:hover {
+      background-color: #555;
+    }
+    .details-btn {
+      background-color: #f1f1f1;
+      color: #333;
+      border: 1px solid #ddd;
+    }
+    .details-btn:hover {
+      background-color: #e5e5e5;
+    }
+    .cart-icon {
+      position: relative;
+      margin-left: 20px;
+    }
+    .cart-icon i {
+      font-size: 24px;
+      cursor: pointer;
+    }
+    #cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background-color: #e74c3c;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 1000px;
+      position: relative;
+    }
+    .close {
+      position: absolute;
+      right: 20px;
+      top: 15px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .product-detail {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+    .product-images {
+      flex: 1;
+      min-width: 300px;
+    }
+    .main-image {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+    .product-info-detail {
+      flex: 1;
+      min-width: 300px;
+    }
+    .product-info-detail h2 {
+      margin-top: 0;
+      font-size: 24px;
+    }
+    .product-info-detail .price {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+    .product-description {
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .quantity-selector {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .quantity-selector button {
+      width: 30px;
+      height: 30px;
+      background-color: #f5f5f5;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .quantity-selector input {
+      width: 50px;
+      height: 30px;
+      text-align: center;
+      border: 1px solid #ddd;
+      border-left: none;
+      border-right: none;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .action-buttons button {
+      flex: 1;
+      padding: 12px 0;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .add-to-cart {
+      background-color: #f1f1f1;
+      color: #333;
+      border: 1px solid #ddd;
+    }
+    .add-to-cart:hover {
+      background-color: #e5e5e5;
+    }
+    .buy-now {
+      background-color: #333;
+      color: white;
+      border: none;
+    }
+    .buy-now:hover {
+      background-color: #555;
+    }
+    
+    /* Reviews section */
+    .reviews-section {
+      margin-top: 30px;
+      border-top: 1px solid #ddd;
+      padding-top: 20px;
+    }
+    .reviews-section h3 {
+      margin-bottom: 20px;
+    }
+    .review {
+      border-bottom: 1px solid #eee;
+      padding: 15px 0;
+    }
+    .review:last-child {
+      border-bottom: none;
+    }
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .reviewer-name {
+      font-weight: bold;
+    }
+    .review-date {
+      color: #777;
+      font-size: 14px;
+    }
+    .stars {
+      color: #f39c12;
+      margin-bottom: 8px;
+    }
+    .review-content {
+      line-height: 1.5;
+    }
+    
+    /* Cart modal */
+    .cart-modal .modal-content {
+      max-width: 800px;
+    }
+    .cart-items {
+      margin-bottom: 20px;
+    }
+    .cart-item {
+      display: flex;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .cart-item-image {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-right: 15px;
+    }
+    .cart-item-details {
+      flex: 1;
+    }
+    .cart-item-name {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .cart-item-price {
+      color: #777;
+    }
+    .cart-item-quantity {
+      display: flex;
+      align-items: center;
+      margin: 0 20px;
+    }
+    .cart-item-quantity button {
+      width: 25px;
+      height: 25px;
+      background-color: #f5f5f5;
+      border: 1px solid #ddd;
+      cursor: pointer;
+    }
+    .cart-item-quantity span {
+      width: 30px;
+      text-align: center;
+    }
+    .cart-item-total {
+      font-weight: bold;
+      margin-right: 15px;
+    }
+    .cart-item-remove {
+      color: #e74c3c;
+      cursor: pointer;
+    }
+    .cart-summary {
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .cart-summary h3 {
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .summary-row.total {
+      font-weight: bold;
+      font-size: 18px;
+      border-top: 1px solid #ddd;
+      padding-top: 10px;
+      margin-top: 10px;
+    }
+    .checkout-btn {
+      display: block;
+      width: 100%;
+      padding: 12px 0;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 15px;
+    }
+    .checkout-btn:hover {
+      background-color: #555;
+    }
+    
+    /* Checkout modal */
+    .checkout-modal .modal-content {
+      max-width: 800px;
+    }
+    .checkout-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .form-section {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .form-section h3 {
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+    .form-row {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    .form-group {
+      flex: 1;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .payment-methods {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .payment-method {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .payment-method.active {
+      border-color: #333;
+      background-color: #f9f9f9;
+    }
+    .payment-method input {
+      margin-right: 10px;
+    }
+    .place-order-btn {
+      display: block;
+      width: 100%;
+      padding: 12px 0;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 20px;
+    }
+    .place-order-btn:hover {
+      background-color: #555;
+    }
+    
+    /* Category sections */
+    .category-section {
+      margin-bottom: 40px;
+    }
+    .category-section h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 1200px) {
+      .products {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (max-width: 900px) {
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .container {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+      }
+      .products {
+        grid-template-columns: 1fr;
+      }
+      .top-nav {
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+      .product-detail {
+        flex-direction: column;
+      }
+      .form-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="top-nav">
+    <a href="#">NEW TODAY</a>
+    <a href="#">CLOTHING</a>
+    <a href="#">DRESSES</a>
+    <a href="#">SHOES</a>
+    <a href="#">ACCESSORIES</a>
+    <a href="#">DESIGNERS</a>
+    <a href="#">FESTIVAL</a>
+    <a href="#">SALE</a>
+  </div>
+
+  <header>
+    <h1>Luxury Perfumes</h1>
+    <nav>
+      <a href="#">New Arrivals</a>
+      <a href="#">Designer</a>
+      <a href="#">Ittar</a>
+      <a href="#">Collections</a>
+      <div class="cart-icon" onclick="openCartModal()">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-count">0</span>
+      </div>
+    </nav>
+  </header>
+
+  <!-- <div class="container">
+    <div class="sidebar">
+      <h3>Categories</h3>
+      <ul>
+        <li onclick="displayProducts(products)">Show All</li>
+        <li onclick="filterItems('Hair Accessories')">Hair Accessories</li>
+        <li onclick="filterItems('Jewelry')">Jewelry</li>
+        <li onclick="filterItems('Hats')">Hats</li>
+        <li onclick="filterItems('Belts')">Belts</li>
+      </ul>
+      
+    </div>
+    <div class="products" id="products"></div>
+  </div> -->
+  <div class="container">
+    <div class="sidebar">
+      <h3>Categories</h3>
+      <ul id="category-list">
+        <li onclick="displayAllProducts()">Show All</li>
+        <li onclick="filterByCategory('Designer')">Designer</li>
+        <li onclick="filterByCategory('Niche')">Niche</li>
+        <li onclick="filterByCategory('Ittar')">Ittar</li>
+        <li onclick="filterByCategory('Collection')">Collections</li>
+      </ul>
+    </div>
+    <div class="products" id="products"></div>
+  </div>
+  
+  <!-- Product Detail Modal -->
+  <div id="product-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeProductModal()">&times;</span>
+      <div id="product-detail" class="product-detail">
+        <!-- Product details will be loaded here -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Cart Modal -->
+  <div id="cart-modal" class="modal cart-modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeCartModal()">&times;</span>
+      <h2>Your Shopping Cart</h2>
+      <div id="cart-content">
+        <!-- Cart items will be loaded here -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Checkout Modal -->
+  <div id="checkout-modal" class="modal checkout-modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeCheckoutModal()">&times;</span>
+      <h2>Checkout</h2>
+      <div class="checkout-container">
+        <div class="checkout-form">
+          <div class="form-section">
+            <h3>Contact Information</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" required>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-section">
+            <h3>Shipping Address</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="first-name">First Name</label>
+                <input type="text" id="first-name" required>
+              </div>
+              <div class="form-group">
+                <label for="last-name">Last Name</label>
+                <input type="text" id="last-name" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="address">Address</label>
+              <input type="text" id="address" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" required>
+              </div>
+              <div class="form-group">
+                <label for="state">State</label>
+                <input type="text" id="state" required>
+              </div>
+              <div class="form-group">
+                <label for="zip">Postal Code</label>
+                <input type="text" id="zip" required>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-section">
+            <h3>Payment Method</h3>
+            <div class="payment-methods">
+              <label class="payment-method active">
+                <input type="radio" name="payment" value="credit-card" checked>
+                <span>Credit Card</span>
+              </label>
+              <label class="payment-method">
+                <input type="radio" name="payment" value="paypal">
+                <span>PayPal</span>
+              </label>
+              <label class="payment-method">
+                <input type="radio" name="payment" value="upi">
+                <span>UPI</span>
+              </label>
+            </div>
+            
+            <div id="credit-card-form" class="payment-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="card-number">Card Number</label>
+                  <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="card-name">Name on Card</label>
+                  <input type="text" id="card-name" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="expiry">Expiry Date</label>
+                  <input type="text" id="expiry" placeholder="MM/YY" required>
+                </div>
+                <div class="form-group">
+                  <label for="cvv">CVV</label>
+                  <input type="text" id="cvv" required>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <button class="place-order-btn" onclick="placeOrder()">Place Order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Product data with descriptions and reviews
+    const products = [
+  {
+    id: 1,
+    category: 'Designer',
+    name: 'Chanel No. 5',
+    price: '₹8,999.00',
+    image: 'https://i.pinimg.com/474x/80/9a/6a/809a6a1a290430562965b484ee793d34.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/39/4a/1d/394a1dd73f1bf9f929cc0fc8b3631785.jpg',
+    description: 'An iconic floral-aldehyde fragrance with notes of rose, jasmine, and vanilla. A timeless classic that has defined elegance for generations.',
+    stock: 15,
+    reviews: [
+      { name: 'Priya S.', date: '2025-03-15', rating: 5, comment: 'Beautiful fragrance! The quality is excellent and it lasts all day long.' },
+      { name: 'Ananya R.', date: '2025-02-28', rating: 4, comment: 'Love the scent. Would buy again.' }
+    ]
+  },
+  {
+    id: 2,
+    category: 'Designer',
+    name: 'Dior Sauvage',
+    price: '₹7,200.00',
+    image: 'https://i.pinimg.com/474x/22/91/12/22911272f83b943367f0511de9c277b2.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/9a/df/4e/9adf4e2e23e8406c0db3d7a06b994338.jpg',
+    description: 'A powerful and fresh masculine fragrance with notes of bergamot, pepper, and ambroxan. Bold, sophisticated, and perfect for everyday wear.',
+    stock: 25,
+    reviews: [
+      { name: 'Rahul K.', date: '2025-04-02', rating: 5, comment: 'My signature scent! Gets compliments everywhere I go.' },
+      { name: 'Vikram T.', date: '2025-03-15', rating: 4, comment: 'Great projection and longevity. Worth every rupee.' }
+    ]
+  },
+  {
+    id: 3,
+    category: 'Designer',
+    name: 'Versace Bright Crystal',
+    price: '₹5,300.00',
+    image: 'https://i.pinimg.com/474x/24/dd/c8/24ddc835847d0dfcc5d8bfc662552c58.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/d6/e6/cf/d6e6cf41068bb50417576bde226beb4e.jpg',
+    description: 'A fresh and sensual floral fragrance with notes of pomegranate, yuzu, and magnolia. Perfect for the confident, modern woman.',
+    stock: 30,
+    reviews: [
+      { name: 'Neha G.', date: '2025-03-28', rating: 5, comment: 'So fresh and feminine! Perfect for summer.' },
+      { name: 'Aisha M.', date: '2025-02-10', rating: 3, comment: 'Nice scent but doesn\'t last as long as I\'d like.' }
+    ]
+  },
+  {
+    id: 4,
+    category: 'Designer',
+    name: 'Tom Ford Black Orchid',
+    price: '₹12,250.00',
+    image: 'https://i.pinimg.com/474x/68/d7/3d/68d73d5356296f95f505c8e64b4b3981.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/2a/48/33/2a4833d8730e0da325a0e6bfb7cade1c.jpg',
+    description: 'A luxurious and sensual fragrance with notes of black truffle, ylang-ylang, and dark chocolate. Bold, mysterious, and unforgettable.',
+    stock: 18,
+    reviews: [
+      { name: 'Ankita R.', date: '2025-04-14', rating: 5, comment: 'Sophisticated and unique. Perfect for evening events.' },
+      { name: 'Divya S.', date: '2025-04-08', rating: 4, comment: 'Rich and complex. A little goes a long way.' }
+    ]
+  },
+  { 
+    id: 5,
+    category: 'Designer', 
+    name: 'Gucci Bloom', 
+    price: '₹6,499.00', 
+    image: 'https://i.pinimg.com/474x/60/48/df/6048df7d6a9ec7c8348bb7f9b8b4e631.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/4e/7d/af/4e7daf164c1f15a43c1b962d14cf61d1.jpg',
+    description: 'A rich white floral scent featuring tuberose and jasmine. Created to unfold like its name, it celebrates the authenticity and vitality of women.',
+    stock: 22,
+    reviews: [
+      { name: 'Deepa R.', date: '2025-04-05', rating: 5, comment: 'Love this fragrance! The floral notes are so elegant.' },
+      { name: 'Tina M.', date: '2025-03-22', rating: 4, comment: 'Beautiful scent that lasts all day. Perfect for spring.' }
+    ]
+  },
+  {
+    id: 6,
+    category: 'Designer',
+    name: 'Yves Saint Laurent Libre',
+    price: '₹7,499.00',
+    image: 'https://i.pinimg.com/474x/c4/22/ad/c422ad5b4ec7ca2f884628057d8d8350.jpg',
+    hoverImage: 'https://i.pinimg.com/736x/07/8a/4d/078a4d9ea7abc19330ec0ecf204772c5.jpg',
+    description: 'A bold floral lavender fragrance with notes of orange blossom and vanilla. Represents freedom and independence for the modern woman.',
+    stock: 20,
+    reviews: [
+      { name: 'Harshita K.', date: '2025-04-10', rating: 5, comment: 'Sophisticated and long-lasting. My new favorite!' },
+      { name: 'Riya S.', date: '2025-03-28', rating: 4, comment: 'The lavender and vanilla combination is divine.' }
+    ]
+  },
+  {
+    id: 7,
+    category: 'Designer', 
+    name: 'Bleu de Chanel', 
+    price: '₹8,299.00', 
+    image: 'https://i.pinimg.com/474x/e1/fa/48/e1fa487ec392779d1aceecd77f5d164a.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/64/c3/2d/64c32df16dded3a68a40b3b1597a9548.jpg',
+    description: 'A woody aromatic fragrance for men with notes of citrus, vetiver, and cedar. Embodies independence and determination with timeless sophistication.',
+    stock: 25,
+    reviews: [
+      { name: 'Arjun K.', date: '2025-04-02', rating: 5, comment: 'My go-to fragrance for important meetings. Always gets compliments.' },
+      { name: 'Rohan T.', date: '2025-03-15', rating: 4, comment: 'Clean, fresh, and masculine. Great for daily wear.' }
+    ]
+  },
+  {
+    id: 8,
+    category: 'Designer', 
+    name: 'Marc Jacobs Daisy', 
+    price: '₹5,599.00', 
+    image: 'https://i.pinimg.com/474x/fe/51/a5/fe51a570a3231ae53d2e94779dd295c8.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/5a/f8/eb/5af8eb323b11818bbd52379da30ab7a9.jpg',
+    description: 'A fresh and feminine fragrance with notes of wild berries, white violet, and jasmine. The iconic bottle with daisy cap embodies youthful sophistication.',
+    stock: 28,
+    reviews: [
+      { name: 'Meera K.', date: '2025-04-02', rating: 5, comment: 'Such a happy, uplifting scent! Perfect for everyday wear.' },
+      { name: 'Riya T.', date: '2025-03-15', rating: 4, comment: 'Light and fresh. Great for office or casual outings.' }
+    ]
+  },
+  {
+    id: 9,
+    category: 'Niche',
+    name: 'Byredo Gypsy Water',
+    price: '₹15,500.00',
+    image: 'https://i.pinimg.com/474x/aa/00/d5/aa00d5f353993a28b8efabc7a2cdfb50.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/aa/00/d5/aa00d5f353993a28b8efabc7a2cdfb50.jpg',
+    description: 'A woody aromatic fragrance inspired by the Romani culture with notes of bergamot, lemon, pepper, and amber. Bohemian and mysterious.',
+    stock: 12,
+    reviews: [
+      { name: 'Aditi P.', date: '2025-04-02', rating: 5, comment: 'Unique and captivating. Worth every penny!' },
+      { name: 'Tanvi R.', date: '2025-03-15', rating: 4, comment: 'Subtle yet distinctive. Gets so many questions about what I\'m wearing.' }
+    ]
+  },
+  {
+    id: 10,
+    category: 'Niche',
+    name: 'Maison Francis Kurkdjian Baccarat Rouge 540',
+    price: '₹19,900.00',
+    image: 'https://i.pinimg.com/474x/9b/db/9d/9bdb9de3895e8fe8846c0f0f47eeea88.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/9b/db/9d/9bdb9de3895e8fe8846c0f0f47eeea88.jpg',
+    description: 'A luxurious amber floral fragrance with notes of jasmine, saffron, cedar, and ambergris. Creates an aura of sophistication and warmth.',
+    stock: 10,
+    reviews: [
+      { name: 'Naina K.', date: '2025-04-02', rating: 5, comment: 'The most complimented fragrance I\'ve ever worn. Magical!' },
+      { name: 'Sanjana T.', date: '2025-03-15', rating: 5, comment: 'Worth every rupee. Lasts all day and into the next.' }
+    ]
+  },
+  {
+    id: 11,
+    category: 'Niche',
+    name: 'Creed Aventus',
+    price: '₹22,150.00',
+    image: 'https://i.pinimg.com/474x/44/45/61/444561c572ede7d3a2677c3146c1b761.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/c6/91/15/c691157d98582baf9670a373e32856b5.jpg',
+    description: 'A sophisticated blend of blackcurrant, bergamot, apple, and pineapple with a woody base. The ultimate statement of success and power.',
+    stock: 8,
+    reviews: [
+      { name: 'Vikas M.', date: '2025-04-02', rating: 5, comment: 'The king of fragrances. Nothing compares to it.' },
+      { name: 'Raj T.', date: '2025-03-15', rating: 4, comment: 'Exceptional quality and performance. A true masterpiece.' }
+    ]
+  },
+  {
+    id: 12,
+    category: 'Niche',
+    name: 'Diptyque Philosykos',
+    price: '₹12,100.00',
+    image: 'https://i.pinimg.com/474x/4d/45/5c/4d455c70ec4385da08a2fd3d66262bb9.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/ee/2d/1b/ee2d1b16cbc2451db194cd05fdc3740b.jpg',
+    description: 'A green fig fragrance that captures the entire tree: the wood, the leaves, and the fruit. Fresh, green, and uniquely Mediterranean.',
+    stock: 15,
+    reviews: [
+      { name: 'Kavita D.', date: '2025-04-02', rating: 5, comment: 'Like walking through a fig grove in summer. Transporting!' },
+      { name: 'Priya N.', date: '2025-03-15', rating: 4, comment: 'So unique and natural. A true artistic creation.' }
+    ]
+  },
+  {
+    id: 13,
+    category: 'Niche',
+    name: 'Le Labo Santal 33',
+    price: '₹16,699.00',
+    image: 'https://i.pinimg.com/736x/a0/d7/52/a0d752f577ebf90c2cc7f4860fe66b7a.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/93/c8/f9/93c8f95cefddde2a87a75eaf99023c6c.jpg',
+    description: 'A unisex fragrance with notes of cardamom, iris, violet, and sandalwood. Addictive, distinctive, and instantly recognizable.',
+    stock: 10,
+    reviews: [
+      { name: 'Karan M.', date: '2025-04-13', rating: 5, comment: 'The most unique sandalwood fragrance. Worth the hype!' },
+      { name: 'Neha S.', date: '2025-04-14', rating: 5, comment: 'Sophisticated and distinctive. My signature scent now.' }
+    ]
+  },
+  {
+    id: 14,
+    category: 'Niche',
+    name: 'Frederic Malle Portrait of a Lady',
+    price: '₹24,899.00',
+    image: 'https://i.pinimg.com/474x/d8/c4/c5/d8c4c56633d164dc5094d6590021fcd7.jpg',
+    hoverImage:'https://i.pinimg.com/474x/0c/6e/68/0c6e68c9bda00e5c5703d6981ea9ce4e.jpg',
+    description: 'An oriental rose fragrance with notes of Turkish rose, raspberry, patchouli, and sandalwood. Opulent, sophisticated, and unforgettable.',
+    stock: 7,
+    reviews: [
+      { name: 'Shalini K.', date: '2025-04-02', rating: 5, comment: 'The most beautiful rose fragrance ever created. Pure luxury.' },
+      { name: 'Tanya R.', date: '2025-03-15', rating: 5, comment: 'Exquisite and long-lasting. Worth every penny.' }
+    ]
+  },
+  {
+    id: 15,
+    category: 'Niche',
+    name: 'Xerjoff Naxos',
+    price: '₹26,499.00',
+    image: 'https://i.pinimg.com/474x/e4/8a/ad/e48aad103f8712f9fd56a48864f2f13d.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/24/33/46/24334616cf64df6777e6ffbd5252e693.jpg',
+    description: 'A rich tobacco honey fragrance with notes of lavender, cinnamon, and vanilla. Opulent, warm, and addictively sweet.',
+    stock: 5,
+    reviews: [
+      { name: 'Aryan D.', date: '2025-04-02', rating: 5, comment: 'The most compliment-getting fragrance I own. Incredible!' },
+      { name: 'Kabir S.', date: '2025-03-15', rating: 5, comment: 'Like liquid gold. Worth every rupee and then some.' }
+    ]
+  },
+  {
+    id: 16,
+    category: 'Ittar',
+    name: 'Mysore Sandalwood Attar',
+    price: '₹2,499.00',
+    image: 'https://i.pinimg.com/474x/63/8b/03/638b0341b6b2f164cda7608068dea621.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/7f/56/06/7f5606121f3730460a87433f2261caca.jpg',
+    description: 'Pure Mysore sandalwood oil, known for its rich, creamy, and woody aroma. A traditional Indian fragrance with deep cultural significance.',
+    stock: 20,
+    reviews: [
+      { name: 'Divya S.', date: '2025-04-10', rating: 5, comment: 'The most authentic sandalwood fragrance. Pure and natural.' },
+      { name: 'Pooja R.', date: '2025-03-22', rating: 5, comment: 'The quality is exceptional. Worth every rupee!' }
+    ]
+  },
+  {
+    id: 17,
+    category: 'Ittar',
+    name: 'Rose Attar',
+    price: '₹1,599.00',
+    image: 'https://i.pinimg.com/474x/78/b1/bb/78b1bb7c6fd0e3bcf8c87a04bc0945ea.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/33/ac/2a/33ac2a5c3c7b717417753146f9bb013b.jpg',
+    description: 'Traditional Indian rose attar made from steam-distilled Damask roses. Deep, rich, and authentic rose fragrance without any synthetic notes.',
+    stock: 25,
+    reviews: [
+      { name: 'Anjali P.', date: '2025-04-05', rating: 5, comment: 'The most beautiful rose scent I\'ve ever experienced. Pure and natural.' },
+      { name: 'Kavita M.', date: '2025-03-18', rating: 4, comment: 'Rich and authentic rose fragrance. Lasts all day.' }
+    ]
+  },
+  {
+    id: 18,
+    category: 'Ittar',
+    name: 'Mitti Attar',
+    price: '₹999.00',
+    image: 'https://i.pinimg.com/474x/f9/19/82/f91982bbae2a5b34d520b9b5a5d30542.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/c6/5f/e8/c65fe8e361ee1e132574323d60ca877d.jpg',
+    description: 'The scent of earth after the first rain (petrichor). A nostalgic and grounding fragrance that captures the essence of Indian monsoons.',
+    stock: 30,
+    reviews: [
+      { name: 'Rajesh P.', date: '2025-04-05', rating: 5, comment: 'Takes me back to childhood monsoons. So authentic!' },
+      { name: 'Kavita M.', date: '2025-03-18', rating: 5, comment: 'The most realistic petrichor scent. Absolutely love it.' }
+    ]
+  },
+  {
+    id: 19,
+    category: 'Ittar',
+    name: 'Shamama Attar',
+    price: '₹3,199.00',
+    image: 'https://i.pinimg.com/474x/7e/6c/7c/7e6c7cc0739684af45632ec4ba21b4e7.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/23/5b/f8/235bf88a7db93d2f1f75074059fbba70.jpg',
+    description: 'A complex blend of over 40 herbs and spices, aged for years. A royal fragrance with deep historical significance in Indian perfumery.',
+    stock: 15,
+    reviews: [
+      { name: 'Anand K.', date: '2025-04-05', rating: 5, comment: 'Complex and regal. A true masterpiece of traditional perfumery.' },
+      { name: 'Rahul M.', date: '2025-03-18', rating: 5, comment: 'Like nothing I\'ve ever smelled before. Worth every rupee.' }
+    ]
+  },
+  {
+    id: 20,
+    category: 'Ittar',
+    name: 'Kewda Attar',
+    price: '₹1,499.00',
+    image: 'https://i.pinimg.com/474x/29/60/42/29604204fb790fd638385987ebd5d099.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/35/c7/b9/35c7b9e105acac48317c56c215aeb754.jpg',
+    description: 'Distilled from the flowers of the screw pine, this attar has a unique floral-green scent. Traditional in Indian ceremonies and celebrations.',
+    stock: 20,
+    reviews: [
+      { name: 'Vikram P.', date: '2025-04-05', rating: 5, comment: 'Such a unique floral scent. Reminds me of temple visits.' },
+      { name: 'Meena M.', date: '2025-03-18', rating: 4, comment: 'Beautiful and authentic. Lasts surprisingly long.' }
+    ]
+  },
+  {
+    id: 21,
+    category: 'Ittar',
+    name: 'Oudh Attar',
+    price: '₹4,899.00',
+    image: 'https://i.pinimg.com/474x/4b/c7/66/4bc76699a29188bb59280a824538dfd4.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/34/44/96/3444965e4424b7896d3af7d615d20875.jpg',
+    description: 'Rare and precious agarwood oil with a deep, woody, and slightly sweet aroma. One of the most expensive natural raw materials in perfumery.',
+    stock: 8,
+    reviews: [
+      { name: 'Farhan A.', date: '2025-04-05', rating: 5, comment: 'The most authentic oud I\'ve found in India. Exceptional quality.' },
+      { name: 'Zara K.', date: '2025-03-18', rating: 5, comment: 'Rich, complex, and long-lasting. A true luxury.' }
+    ]
+  },
+  {
+    id: 22,
+    category: 'Ittar',
+    name: 'Mogra Attar',
+    price: '₹1,499.00',
+    image: 'https://i.pinimg.com/474x/55/3a/c2/553ac2e6a87750b9e707817f823b5e66.jpg',
+    hoverImage: 'https://i.pinimg.com/736x/50/11/4b/50114b8e8ca20a71f70378254cce0df5.jpg',
+    description: 'Jasmine sambac (Arabian jasmine) distilled in the traditional method. A rich, sweet, and intoxicating white floral scent.',
+    stock: 22,
+    reviews: [
+      { name: 'Priya D.', date: '2025-04-05', rating: 5, comment: 'The most beautiful jasmine scent. Pure and natural.' },
+      { name: 'Neha R.', date: '2025-03-18', rating: 5, comment: 'Reminds me of summer evenings in my grandmother\'s garden.' }
+    ]
+  },
+  {
+    id: 23,
+    category: 'Collection',
+    name: 'Summer Breeze Collection',
+    price: '₹7,799.00',
+    image: 'https://i.pinimg.com/474x/28/f5/67/28f5678c9b29449358ce64ceac81301e.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/3b/0a/64/3b0a648f7aa0680ba5b9f120d077e4ae.jpg',
+    description: 'A set of three light, fresh fragrances perfect for summer: Citrus Splash, Ocean Breeze, and Tropical Sunset. Each 30ml bottle captures a different summer mood.',
+    stock: 15,
+    reviews: [
+      { name: 'Anjali P.', date: '2025-04-05', rating: 5, comment: 'Perfect summer scents! The Tropical Sunset is my favorite.' },
+      { name: 'Kavita M.', date: '2025-03-18', rating: 4, comment: 'Great value for three quality fragrances. Love the variety.' }
+    ]
+  },
+  {
+    id: 24,
+    category: 'Collection',
+    name: 'Oriental Nights Collection',
+    price: '₹9,099.00',
+    image: 'https://i.pinimg.com/474x/bf/47/60/bf476010800098de0f91f8ddb424657a.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/c2/a5/54/c2a55452ed0d46bdf9ae7fecdd8ca947.jpg',
+    description: 'A luxurious collection of three rich, spicy fragrances: Amber Dreams, Spice Bazaar, and Velvet Oud. Perfect for evening wear and special occasions.',
+    stock: 12,
+    reviews: [
+      { name: 'Aryan P.', date: '2025-04-05', rating: 5, comment: 'These fragrances are incredible for formal events. So sophisticated!' },
+      { name: 'Zoya M.', date: '2025-03-18', rating: 5, comment: 'The Velvet Oud is worth the price of the whole set. Amazing quality.' }
+    ]
+  },
+  {
+    id: 25,
+    category: 'Collection',
+    name: 'Floral Symphony Collection',
+    price: '₹6,699.00',
+    image: 'https://i.pinimg.com/474x/46/07/34/4607342f1afe655dd765b66bd02416d5.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/e7/fe/70/e7fe700bd3f883fb526327b1fc5db5fd.jpg',
+    description: 'A beautiful collection of three floral fragrances: Rose Garden, Jasmine Dreams, and Lily of the Valley. Elegant, feminine, and timeless.',
+    stock: 18,
+    reviews: [
+      { name: 'Sonia P.', date: '2025-04-05', rating: 5, comment: 'The most beautiful floral collection. Each one is distinct and lovely.' },
+      { name: 'Ritu M.', date: '2025-03-18', rating: 4, comment: 'Jasmine Dreams is my absolute favorite. Such elegant fragrances.' }
+    ]
+  },
+  {
+    id: 26,
+    category: 'Collection',
+    name: 'Gentleman\'s Club Collection',
+    price: '₹8,499.00',
+    image: 'https://i.pinimg.com/474x/09/c2/f2/09c2f21003a0d6c147c233ccb465106e.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/8a/ac/5b/8aac5b1b1d111c2ca2a936c8279eeb32.jpg',
+    description: 'A sophisticated collection of three masculine fragrances: Leather & Tobacco, Whiskey & Cedarwood, and Vetiver Noir. Classic, refined, and confident.',
+    stock: 14,
+    reviews: [
+      { name: 'Vikram P.', date: '2025-04-05', rating: 5, comment: 'Exceptional quality and presentation. Perfect gift for any gentleman.' },
+      { name: 'Rahul M.', date: '2025-03-18', rating: 5, comment: 'These fragrances exude confidence and class. Worth every rupee.' }
+    ]
+  },
+  {
+    id: 27,
+    category: 'Collection',
+    name: 'Seasons Collection',
+    price: '₹10,500.00',
+    image: 'https://i.pinimg.com/474x/d3/de/af/d3deafd4fd3deb619ef3da56586df7dc.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/5a/f4/8b/5af48b2f1111f6afba09d706312ed004.jpg',
+    description: 'A complete year-round collection with four fragrances: Spring Bloom, Summer Breeze, Autumn Leaves, and Winter Frost. Each 50ml bottle captures the essence of a season.',
+    stock: 10,
+    reviews: [
+      { name: 'Aisha P.', date: '2025-04-05', rating: 5, comment: 'Such a creative concept! I love changing my scent with the seasons.' },
+      { name: 'Nisha M.', date: '2025-03-18', rating: 5, comment: 'The Winter Frost is incredible - warm, spicy, and perfect for cold weather.' }
+    ]
+  },
+  {
+    id: 28,
+    category: 'Collection',
+    name: 'Travel Essentials Collection',
+    price: '₹5,500.00',
+    image: 'https://i.pinimg.com/474x/08/93/c9/0893c96aa1175ee42272bcebcb4ab0b3.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/62/2d/5a/622d5a7ee600719a64f6d2b18aacca45.jpg',
+    description: 'A set of five 15ml travel-sized fragrances: Fresh Citrus, Floral Bouquet, Woody Spice, Sweet Vanilla, and Clean Musk. Perfect for travelers or those wanting to sample different scents.',
+    stock: 25,
+    reviews: [
+      { name: 'Priya P.', date: '2025-04-05', rating: 5, comment: 'Perfect for my business trips! Compact yet diverse options.' },
+      { name: 'Tara M.', date: '2025-03-18', rating: 4, comment: 'Great way to try different scent families before committing to a full bottle.' }
+    ]
+  },
+  {
+    id: 29,
+    category: 'Designer',
+    name: 'Armani Acqua di Gio',
+    price: '₹6,500.00',
+    image: 'https://i.pinimg.com/474x/9c/76/81/9c7681362b514feac51a7a3249ee9167.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/9c/76/81/9c7681362b514feac51a7a3249ee9167.jpg',
+    description: 'A timeless aquatic aromatic fragrance for men with notes of marine notes, bergamot, and cedar. Fresh, clean, and eternally popular.',
+    stock: 30,
+    reviews: [
+      { name: 'Karan P.', date: '2025-04-05', rating: 5, comment: 'A classic for a reason. Fresh and versatile for any occasion.' },
+      { name: 'Aditya M.', date: '2025-03-18', rating: 4, comment: 'My signature scent for over a decade. Never fails to impress.' }
+    ]
+  },
+  {
+    id: 30,
+    category: 'Designer',
+    name: 'Jo Malone English Pear & Freesia',
+    price: '₹9,800.00',
+    image: 'https://i.pinimg.com/474x/f5/b9/b5/f5b9b527fc5b776b345a67b0fd4d269c.jpg',
+    hoverImage: 'https://i.pinimg.com/474x/19/12/e7/1912e735e7b2f72336cebd713d3257d2.jpg',
+    description: 'A delicate fruity floral fragrance with notes of pear, freesia, and patchouli. Crisp, light, and elegant for everyday sophistication.',
+    stock: 18,
+    reviews: [
+      { name: 'Sneha P.', date: '2025-04-05', rating: 5, comment: 'So fresh and elegant. Perfect for office wear.' },
+      { name: 'Mira M.', date: '2025-03-18', rating: 5, comment: 'The pear note is so realistic and beautiful. My new favorite!' }
+    ]
+  }
+];
+
+    // Cart array to store items
+    let cart = [];
+
+    // Function to display products
+    function displayProducts(items) {
+      const container = document.getElementById('products');
+      container.innerHTML = '';
+      items.forEach(item => {
+        container.innerHTML += `
+          <div class="product" data-id="${item.id}">
+            <div class="img-container">
+              <img src="${item.image}" alt="${item.name}" class="default-img">
+              <img src="${item.hoverImage || item.image}" alt="${item.name} hover" class="hover-img">
+            </div>
+            <h4>${item.name}</h4>
+            <p>${item.price}</p>
+            <div class="product-buttons">
+              <button class="buy-now-btn" onclick="buyNow(${item.id})">Buy Now</button>
+              <button class="details-btn" onclick="showDetails(${item.id})">Details</button>
+            </div>
+          </div>`;
+      });
+    }
+
+    // Function to filter items by category
+    function filterItems(category) {
+      const filtered = products.filter(p => p.category === category);
+      displayProducts(filtered);
+    }
+
+    // Function to get product by ID
+    function getProductById(id) {
+      return products.find(product => product.id === parseInt(id));
+    }
+
+    // Function to show product details
+    function showDetails(productId) {
+      const product = getProductById(productId);
+      if (!product) return;
+      
+      const productDetail = document.getElementById('product-detail');
+      
+      // Generate reviews HTML
+      let reviewsHTML = '';
+      if (product.reviews && product.reviews.length > 0) {
+        product.reviews.forEach(review => {
+          // Generate stars
+          let starsHTML = '';
+          for (let i = 1; i <= 5; i++) {
+            if (i <= review.rating) {
+              starsHTML += '<i class="fas fa-star"></i>';
+            } else {
+              starsHTML += '<i class="far fa-star"></i>';
+            }
+          }
+          
+          reviewsHTML += `
+            <div class="review">
+              <div class="review-header">
+                <span class="reviewer-name">${review.name}</span>
+                <span class="review-date">${review.date}</span>
+              </div>
+              <div class="stars">
+                ${starsHTML}
+              </div>
+              <div class="review-content">
+                <p>${review.comment}</p>
+              </div>
+            </div>
+          `;
+        });
+      } else {
+        reviewsHTML = '<p>No reviews yet.</p>';
+      }
+      
+      productDetail.innerHTML = `
+        <div class="product-images">
+          <img src="${product.image}" alt="${product.name}" class="main-image">
+        </div>
+        <div class="product-info-detail">
+          <h2>${product.name}</h2>
+          <div class="price">${product.price}</div>
+          <div class="product-description">
+            <p>${product.description}</p>
+          </div>
+          <div class="quantity-selector">
+            <button onclick="decrementQuantity()">-</button>
+            <input type="number" id="product-quantity" value="1" min="1" max="${product.stock}">
+            <button onclick="incrementQuantity(${product.stock})">+</button>
+          </div>
+          <div class="action-buttons">
+            <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
+            <button class="buy-now" onclick="buyNow(${product.id})">Buy Now</button>
+          </div>
+          <div class="product-meta">
+            <p><strong>Category:</strong> ${product.category}</p>
+            <p><strong>Availability:</strong> ${product.stock > 0 ? 'In Stock' : 'Out of Stock'} (${product.stock} left)</p>
+          </div>
+          
+          <div class="reviews-section">
+            <h3>Customer Reviews</h3>
+            ${reviewsHTML}
+          </div>
+        </div>
+      `;
+      
+      // Show the modal
+      document.getElementById('product-modal').style.display = 'block';
+    }
+
+    // Function to close product modal
+    function closeProductModal() {
+      document.getElementById('product-modal').style.display = 'none';
+    }
+
+    // Function to increment quantity
+    function incrementQuantity(max) {
+      const quantityInput = document.getElementById('product-quantity');
+      let quantity = parseInt(quantityInput.value);
+      
+      if (quantity < max) {
+        quantityInput.value = quantity + 1;
+      }
+    }
+
+    // Function to decrement quantity
+    function decrementQuantity() {
+      const quantityInput = document.getElementById('product-quantity');
+      let quantity = parseInt(quantityInput.value);
+      
+      if (quantity > 1) {
+        quantityInput.value = quantity - 1;
+      }
+    }
+
+    // Function to add to cart
+    function addToCart(productId) {
+      const product = getProductById(productId);
+      if (!product) return;
+      
+      const quantity = document.getElementById('product-quantity') 
+        ? parseInt(document.getElementById('product-quantity').value) 
+        : 1;
+      
+      // Check if product is already in cart
+      const existingItem = cart.find(item => item.id === productId);
+      
+      if (existingItem) {
+        existingItem.quantity += quantity;
+      } else {
+        cart.push({
+          id: productId,
+          name: product.name,
+          price: product.price,
+          image: product.image,
+          quantity: quantity
+        });
+      }
+      
+      // Update cart count
+      updateCartCount();
+      
+      // Show confirmation
+      alert(`${product.name} added to cart!`);
+      
+      // Close modal if open
+      closeProductModal();
+    }
+
+    // Function to update cart count
+    function updateCartCount() {
+      const cartCount = document.getElementById('cart-count');
+      cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+    }
+
+    // Function to buy now
+    function buyNow(productId) {
+      addToCart(productId);
+      openCheckoutModal();
+      cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+    }
+
+    // Function to buy now
+    function buyNow(productId) {
+      addToCart(productId);
+      openCheckoutModal();
+
+    }
+
+    // Function to open cart modal
+    function openCartModal() {
+      const cartContent = document.getElementById('cart-content');
+      
+      if (cart.length === 0) {
+        cartContent.innerHTML = `
+          <div class="cart-empty">
+            <p>Your cart is empty</p>
+            <button class="btn" onclick="closeCartModal()">Continue Shopping</button>
+          </div>
+        `;
+      } else {
+        let cartHTML = `
+          <div class="cart-items">
+        `;
+        
+        let subtotal = 0;
+        
+        cart.forEach(item => {
+          const price = parseFloat(item.price.replace('₹', '').replace(',', ''));
+          const itemTotal = price * item.quantity;
+          subtotal += itemTotal;
+          
+          cartHTML += `
+            <div class="cart-item" data-id="${item.id}">
+              <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+              <div class="cart-item-details">
+                <div class="cart-item-name">${item.name}</div>
+                <div class="cart-item-price">${item.price}</div>
+              </div>
+              <div class="cart-item-quantity">
+                <button onclick="decrementCartItem(${item.id})">-</button>
+                <span>${item.quantity}</span>
+                <button onclick="incrementCartItem(${item.id})">+</button>
+              </div>
+              <div class="cart-item-total">₹${itemTotal.toFixed(2)}</div>
+              <div class="cart-item-remove" onclick="removeFromCart(${item.id})">
+                <i class="fas fa-trash"></i>
+              </div>
+            </div>
+          `;
+        });
+        
+        const shipping = subtotal > 1000 ? 0 : 99;
+        const total = subtotal + shipping;
+        
+        cartHTML += `
+          </div>
+          <div class="cart-summary">
+            <h3>Order Summary</h3>
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span>₹${subtotal.toFixed(2)}</span>
+            </div>
+            <div class="summary-row">
+              <span>Shipping</span>
+              <span>${shipping === 0 ? 'Free' : '₹' + shipping.toFixed(2)}</span>
+            </div>
+            <div class="summary-row total">
+              <span>Total</span>
+              <span>₹${total.toFixed(2)}</span>
+            </div>
+            <button class="checkout-btn" onclick="openCheckoutModal()">Proceed to Checkout</button>
+          </div>
+        `;
+        
+        cartContent.innerHTML = cartHTML;
+      }
+      
+      document.getElementById('cart-modal').style.display = 'block';
+    }
+
+    // Function to close cart modal
+    function closeCartModal() {
+      document.getElementById('cart-modal').style.display = 'none';
+    }
+
+    // Function to increment cart item
+    function incrementCartItem(id) {
+      const item = cart.find(item => item.id === id);
+      if (item) {
+        item.quantity += 1;
+        openCartModal(); // Refresh cart modal
+        updateCartCount();
+      }
+    }
+
+    // Function to decrement cart item
+    function decrementCartItem(id) {
+      const item = cart.find(item => item.id === id);
+      if (item && item.quantity > 1) {
+        item.quantity -= 1;
+        openCartModal(); // Refresh cart modal
+        updateCartCount();
+      }
+    }
+
+    // Function to remove from cart
+    function removeFromCart(id) {
+      cart = cart.filter(item => item.id !== id);
+      openCartModal(); // Refresh cart modal
+      updateCartCount();
+    }
+
+    // Function to open checkout modal
+    function openCheckoutModal() {
+      if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+      }
+      
+      closeCartModal(); // Close cart modal if open
+      document.getElementById('checkout-modal').style.display = 'block';
+    }
+
+    // Function to close checkout modal
+    function closeCheckoutModal() {
+      document.getElementById('checkout-modal').style.display = 'none';
+    }
+
+    // Function to place order
+    function placeOrder() {
+      // Validate form
+      const requiredFields = document.querySelectorAll('#checkout-modal input[required]');
+      let isValid = true;
+      
+      requiredFields.forEach(field => {
+        if (!field.value) {
+          field.style.borderColor = 'red';
+          isValid = false;
+        } else {
+          field.style.borderColor = '';
+        }
+      });
+      
+      if (!isValid) {
+        alert('Please fill in all required fields');
+        return;
+      }
+      
+      // Process order (in a real app, this would send data to a server)
+      alert('Thank you for your order! Your items will be shipped soon.');
+      
+      // Clear cart
+      cart = [];
+      updateCartCount();
+      
+      // Close checkout modal
+      closeCheckoutModal();
+    }
+
+    // Function to display all products
+    function displayAllProducts() {
+      displayProducts(products);
+    }
+
+    // Function to filter by category
+    function filterByCategory(category) {
+      const filtered = products.filter(p => p.category === category);
+      displayProducts(filtered);
+    }
+
+    // Show all products on page load
+    displayAllProducts();
+  </script>
+</body>
+</html>
